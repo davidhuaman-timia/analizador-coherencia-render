@@ -24,7 +24,12 @@ modelo = None
 def get_modelo():
     global modelo
     if modelo is None:
-        modelo = SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')
+        try:
+            modelo = SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')
+        except Exception as e:
+            print(f"Error cargando modelo: {e}")
+            # Fallback a modelo más simple si falla
+            modelo = SentenceTransformer('all-MiniLM-L6-v2')
     return modelo
 
 # Modelo de datos que espera el endpoint
